@@ -47,12 +47,12 @@ public class ProductoDAO extends Conexion{
         }
     }
     
-    public Producto obtenerProducto(String Nombre) throws ClassNotFoundException, SQLException{
-        String sentencia = "SELECT * FROM producto WHERE Nombre = ?";
+    public Producto obtenerProducto(int ID) throws ClassNotFoundException, SQLException{
+        String sentencia = "SELECT * FROM producto WHERE ID = ?";
         try{
         conectar();
         PreparedStatement ps= obtenerPS(sentencia);
-        ps.setString(1, Nombre);
+        ps.setInt(1, ID);
         ResultSet rs = ps.executeQuery();
         Producto u = null;
         if(rs.next()){

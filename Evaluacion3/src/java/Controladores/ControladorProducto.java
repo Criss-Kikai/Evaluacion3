@@ -62,7 +62,7 @@ public class ControladorProducto extends HttpServlet {
                 Producto p = new Producto(Nombre,Descripcion,Precio);
                  
                 
-                if(pro.obtenerProducto(p.getNombre())==null){
+                if(pro.obtenerProducto(p.getID())==null){
                     int respuesta = pro.registrarProducto(p);
                     if(respuesta==1){
                     response.sendRedirect("index.jsp?msj=Producto registrado");

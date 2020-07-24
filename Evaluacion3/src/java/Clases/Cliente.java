@@ -8,7 +8,10 @@ public class Cliente {
         this.ID = ID;
         this.Correo = Correo;
     }
-
+    
+    public Cliente() {
+    }
+    
     public int getID() {
         return ID;
     }

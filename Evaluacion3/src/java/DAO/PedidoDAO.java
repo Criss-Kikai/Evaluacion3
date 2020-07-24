@@ -1,17 +1,22 @@
 package DAO;
 
+import Clases.Cliente;
 import Clases.Pedido;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
-public class PedidoDAO {
-    /*public int registrarProducto(Pedido p) throws ClassNotFoundException, SQLException{
-        String sentencia = "insert into producto values (,?,?,?)";
+public class PedidoDAO extends Conexion{
+    public int registrarPedido(Pedido p) throws ClassNotFoundException, SQLException{
+        String sentencia = "insert into pedido values (,?,?,?)";
         try{
+           Cliente c = p.getCliente();
         conectar();
         PreparedStatement ps= obtenerPS(sentencia);
-        ps.setString(1, p.getNombre());
-        ps.setString(2, p.getDescripcion());
-        ps.setInt(3, p.getPrecio());
+        ps.setInt(1, c.getID());
+        ps.setString(2, c.getCorreo());
+        ps.setBoolean(3, p.isEstado());
         int r = ps.executeUpdate();
         return r;
         }catch(Exception e){
@@ -21,16 +26,17 @@ public class PedidoDAO {
         }
     }
    
-    public ArrayList<Producto> obtenerProductos() throws ClassNotFoundException, SQLException{
+    public ArrayList<Pedido> obtenerPedidos() throws ClassNotFoundException, SQLException{
         String sentencia = "select * from producto";
         try{
         conectar();
+        ClienteDAO cli = new ClienteDAO();
+        ProductoDAO pro = new ProductoDAO();
         PreparedStatement ps= obtenerPS(sentencia);
         ResultSet rs = ps.executeQuery();
-        ArrayList<Producto> lista = new ArrayList();
+        ArrayList<Pedido> lista = new ArrayList();
         while(rs.next()){
-            lista.add(new Producto(rs.getString("Nombre"),rs.getString("Descripcion"),
-                    rs.getInt("Precio")));
+            lista.add(new Pedido(rs.getInt("ID"),cli.obtenerCliente(rs.getInt("ID_Cliente")),pro.obtenerProducto(rs.getInt("ID_Producto")),rs.getBoolean("Estado")));
         }
         return lista;
         }catch(Exception e){
@@ -40,22 +46,24 @@ public class PedidoDAO {
         }
     }
     
-    public Producto obtenerProducto(String Nombre) throws ClassNotFoundException, SQLException{
-        String sentencia = "SELECT * FROM producto WHERE Nombre = ?";
+    public Pedido obtenerPedido(int ID) throws ClassNotFoundException, SQLException{
+        String sentencia = "SELECT * FROM pedido WHERE ID = ?";
         try{
         conectar();
+        ClienteDAO cli = new ClienteDAO();
+        ProductoDAO pro = new ProductoDAO();
         PreparedStatement ps= obtenerPS(sentencia);
-        ps.setString(1, Nombre);
+        ps.setInt(1, ID);
         ResultSet rs = ps.executeQuery();
-        Producto u = null;
+        Pedido p = null;
         if(rs.next()){
-           u = new Producto(rs.getString("Nombre"),rs.getString("Descripcion"), rs.getInt("Precio"));
+           p = new Pedido(rs.getInt("ID"),cli.obtenerCliente(rs.getInt("ID_Cliente")),pro.obtenerProducto(rs.getInt("ID_Producto")),rs.getBoolean("Estado"));
         }
-        return u;
+        return p;
         }catch(Exception e){
             return null;
         }finally{
             desconectar();
         }
-    }*/
+    }
 }

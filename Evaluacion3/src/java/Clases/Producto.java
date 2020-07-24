@@ -22,6 +22,14 @@ public class Producto {
         this.Precio = Precio;
     }
 
+    public int getID() {
+        return ID;
+    }
+
+    public void setID(int ID) {
+        this.ID = ID;
+    }
+    
     public String getNombre() {
         return Nombre;
     }

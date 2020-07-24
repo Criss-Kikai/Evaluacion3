@@ -38,10 +38,8 @@ public class ControladorProducto extends HttpServlet {
         switch(accion){
             case "1": registrar(request,response);
                 break;
-            /*case "2": modificar(request,response);
-            break;*/
-            case "3": eliminar(request,response);
-            break;
+            default:
+                response.sendRedirect("index.jsp?msj=Opcion no valida");
         }
          }else{
              response.sendRedirect("index.jsp?msj=Opcion no valida");
@@ -78,40 +76,6 @@ public class ControladorProducto extends HttpServlet {
            }
     }
     
-    private void eliminar(HttpServletRequest request, HttpServletResponse response) throws IOException{
-         try{
-            String Nombre = request.getParameter("Nombre").trim();
-            String Descripcion = request.getParameter("Descripcion").trim();
-            int Precio = Integer.parseInt(request.getParameter("Precio").trim());
-           
-            if(Nombre.equals("") || Descripcion.equals("") || Precio<1){
-                response.sendRedirect("index.jsp?msj=Opcion no valida");
-            }else{
-                
-                ProductoDAO pro = new ProductoDAO();
-                Producto p = new Producto(Nombre,Descripcion,Precio);
-                
-                /*if(pro.obtenerProducto(p.getNombre())==null){
-                    int respuesta = pro.;
-                    if(jug.existeEquipo(e)){
-                        response.sendRedirect("equipos.jsp?msj=No se puede eliminar por tener jugadores asociados");
-                    }else{
-                    int respuesta = eq.eliminar(e);
-                    if(respuesta==1){
-                    response.sendRedirect("equipos.jsp?msj=Equipo eliminado");
-                    }else{
-                    response.sendRedirect("equipos.jsp?msj=Equipo no se pudo eliminar");
-                    }}
-                }else{
-                    response.sendRedirect("equipos.jsp?msj=Equipo no existe");
-                }*/
-            }
-           }catch(Exception e){
-               response.sendRedirect("delequipo.jsp?msj="+e.getMessage());
-           }
-        }
-    
-
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
